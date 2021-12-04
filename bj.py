@@ -213,3 +213,4 @@ while play == 0 and len(currentDeck) > 17:
 	# repeat
 	else:
 		play = 1
+	# end game
