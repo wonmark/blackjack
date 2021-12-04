@@ -88,6 +88,7 @@ def wold(value):
 
 
 play = 0
+# play flag
 while play == 0 and len(currentDeck) > 17:
 
 	dealerDeck = []
