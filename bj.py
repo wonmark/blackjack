@@ -210,5 +210,6 @@ while play == 0 and len(currentDeck) > 17:
 	game = input("Another game? (y or n) ")
 	if game == "y":
 		play = 0
+	# repeat
 	else:
 		play = 1
