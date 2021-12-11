@@ -44,7 +44,17 @@ def dealing(currentDeck, currentValue, useDeck, useValue):
 	# adds value into used pile
 
 
+def dealncalculate(xDeck, xDeckValue, xValue):
+# deals a card to me and calculates the value
+	dealing(currentDeck, currentValue, useDeck, useValue)
+	xDeck.append(card)
+	xDeckValue.append(value)
+	xValue = xValue + value
+	xValue = acehole(xDeckValue, xValue)
+
+
 def acehole(deck, value):
+# checks if ace should be one
 	if value > 21:
 	# if total is over 21
 		if 11 in deck:
@@ -98,28 +108,24 @@ while play == 0 and len(currentDeck) > 17:
 	myDeck = []
 	mDeckValue = []
 	myValue = 0
+	splitDeck = []
+	spDeckValue = []
+	splitValue = 0
 	# me
 
 	for x in range(2):
-		dealing(currentDeck, currentValue, useDeck, useValue)
-		dealerDeck.append(card)
-		dDeckValue.append(value)
-		dealerValue = dealerValue + value
+	# deals two random cards to dealer's lists and calculates value
+		dealncalculate(dealerDeck, dDeckValue, dealerValue)
 		
 		dc = "Dealer's cards: {}"
 		print(dc.format(dealerDeck))
 		dv = "Dealer's value: {}"
 		print(dv.format(dealerValue))
 		# displays dealers cards and value
-		
-		dealerValue = acehole(dDeckValue, dealerValue)
-	# deals two random cards to dealer's lists and calculates value
 
 	for x in range(2):
-		dealing(currentDeck, currentValue, useDeck, useValue)
-		myDeck.append(card)
-		mDeckValue.append(value)
-		myValue = myValue + value
+	# deals two random cards to my list and adds value
+		dealncalculate(myDeck, mDeckValue, myValue)
 		
 		mc = "Your cards: {}"
 		print(mc.format(myDeck))
@@ -127,8 +133,6 @@ while play == 0 and len(currentDeck) > 17:
 		print(mv.format(myValue))
 		# displays my cards and value
 		
-		myValue = acehole(mDeckValue, myValue)
-	# deals two random cards to my list and adds value
 
 	"""
 	dc = "Dealer's cards: {}"
@@ -147,14 +151,26 @@ while play == 0 and len(currentDeck) > 17:
 	# checks value for win or loss
 	if flag == 0:
 	# continues when no blackjack or bust
-		hitstand = input("Hit(h) or Stand(s): ")
+		if mDeckValue[0] == mDeckValue[1]:
+		# user acts to hit, split or stand
+			hitstand = input("Hit(h), Split(sp), or Stand(s): ")
+			if hitstand == sp:
+				splitDeck.append(myDeck[1])
+				spDeckValue.append(mDeckValue[1])
+				# save card and value to second deck
+				myValue = myValue - mDeckValue[1]
+				# subtract current value
+				myDeck.pop(1)
+				mDeckValue.pop(1)
+				# delete card and value
+				dealncalculate(myDeck, mDeckValue, myValue)
+				# deal another card and calculate
+				splitflag = 1
+		else:
+			hitstand = input("Hit(h) or Stand(s): ")
 		# user acts to hit or stand 
 		while hitstand == "h":
-			dealing(currentDeck, currentValue, useDeck, useValue)
-			myDeck.append(card)
-			mDeckValue.append(value)
-			myValue = myValue + value
-			myValue = acehole(mDeckValue, myValue)
+			dealncalculate(myDeck, mDeckValue, myValue)
 			# deals another card and calculates value
 			mc = "Your cards: {}"
 			print(mc.format(myDeck))
@@ -179,11 +195,7 @@ while play == 0 and len(currentDeck) > 17:
 		if dflag == 0:
 		# continues when no blackjack or bust
 			while dealerValue < 17:
-				dealing(currentDeck, currentValue, useDeck, useValue)
-				dealerDeck.append(card)
-				dDeckValue.append(value)
-				dealerValue = dealerValue + value
-				dealerValue = acehole(dDeckValue, dealerValue)
+				dealncalculate(dealerDeck, dDeckValue, dealerValue)
 				# deals another card and adds value
 				dc = "Dealer's cards: {}"
 				print(dc.format(dealerDeck))
