@@ -183,6 +183,8 @@ while play == 0 and len(currentDeck) > 17:
 				break
 			hitstand = input("Hit(h) or Stand(s): ")
 			# waits for input
+			
+		# i need to make a repeat here
 
 	if myValue <= 21:
 		dflag = wold(dealerValue)
